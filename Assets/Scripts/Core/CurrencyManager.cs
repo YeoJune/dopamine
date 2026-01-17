@@ -12,19 +12,54 @@ public class CurrencyManager : MonoBehaviour
     
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    
+    public void Initialize()
+    {
+        currentGold = 0;
+        Debug.Log("CurrencyManager initialized with 0 gold");
     }
     
     public int GetGold() => currentGold;
     
     public void AddGold(int amount)
     {
-        // TODO: 골드 증가 및 이벤트 발생
+        if (amount < 0)
+        {
+            Debug.LogWarning($"Attempted to add negative gold: {amount}");
+            return;
+        }
+        
+        currentGold += amount;
+        OnGoldChanged?.Invoke(currentGold);
+        Debug.Log($"Gold added: +{amount} (Total: {currentGold})");
     }
     
     public bool SpendGold(int amount)
     {
-        // TODO: 골드 충분한지 체크 후 차감
-        return false;
+        if (amount < 0)
+        {
+            Debug.LogWarning($"Attempted to spend negative gold: {amount}");
+            return false;
+        }
+        
+        if (currentGold < amount)
+        {
+            Debug.Log($"Not enough gold! Required: {amount}, Current: {currentGold}");
+            return false;
+        }
+        
+        currentGold -= amount;
+        OnGoldChanged?.Invoke(currentGold);
+        Debug.Log($"Gold spent: -{amount} (Remaining: {currentGold})");
+        return true;
     }
 }

@@ -32,7 +32,26 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        // TODO: 각 매니저 Initialize 호출
+        InitializeManagers();
+    }
+    
+    private void InitializeManagers()
+    {
+        if (config == null)
+        {
+            Debug.LogError("GameConfig is not assigned!");
+            return;
+        }
+        
+        // Initialize all managers in proper order
+        if (currencyManager != null) currencyManager.Initialize();
+        if (upgradeManager != null) upgradeManager.Initialize(config);
+        if (smithingManager != null) smithingManager.Initialize(config);
+        if (defenseManager != null) defenseManager.Initialize(config);
+        if (dangerSystem != null) dangerSystem.Initialize(config);
+        if (feverSystem != null) feverSystem.Initialize(config);
+        
+        Debug.Log("Game initialized successfully!");
     }
     
     public GameConfig GetConfig()
