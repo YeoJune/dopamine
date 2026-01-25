@@ -8,7 +8,7 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private List<UpgradeData> availableUpgrades;
     private Dictionary<UpgradeData, int> upgradeLevels = new Dictionary<UpgradeData, int>();
     
-    public void Initialize()
+    public void Initialize(GameConfig gameConfig)
     {
         foreach (var upgrade in availableUpgrades)
         {
