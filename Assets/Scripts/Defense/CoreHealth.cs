@@ -25,13 +25,25 @@ public class CoreHealth : MonoBehaviour
     void Update()
     {
         // TODO: 자동 회복 (config.coreRegenPerSecond)
+        if (currentHealth < maxHealth)
+        {
+            currentHealth += config.coreRegenPerSecond * Time.deltaTime;
+            currentHealth = Mathf.Min(currentHealth, maxHealth);
+        }
     }
     
     public void TakeDamage(float damage)
     {
         // TODO: currentHealth 감소
+        currentHealth -= damage;
         // TODO: UI 업데이트
+        
         // TODO: 0 이하 시 GameManager.GameOver() 호출
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            GameManager.Instance.GameOver();
+        }
     }
     
     public float GetHealthPercent()
