@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     public float GetProgress()
     {
         // TODO: currentPointIndex / (pathPoints.Length - 1) 계산
-        return (float)currentPointIndex / (pathPoints.Length - 1);
+        return 0f;
     }
     
     void Update()
@@ -34,17 +34,8 @@ public class Enemy : MonoBehaviour
         if (pathPoints == null || currentPointIndex >= pathPoints.Length) return;
         
         // TODO: pathPoints[currentPointIndex] 향해 이동
-        transform.position = Vector3.MoveTowards(transform.position, pathPoints[currentPointIndex], moveSpeed * Time.deltaTime);
         // TODO: 도착 시 currentPointIndex++
-        if (Vector3.Distance(transform.position, pathPoints[currentPointIndex]) < 0.1f)
-        {
-            currentPointIndex++;
-        }
         // TODO: 마지막 도달 시 AttackCore()
-        if (currentPointIndex >= pathPoints.Length)
-        {
-            AttackCore();
-        }
     }
     
     private void AttackCore()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SwordSlot : MonoBehaviour
 {
-    public Sword sword;
+    private Sword sword;
     private GameConfig config;
     private float attackRange;
     private float attackCooldown;
@@ -22,7 +22,7 @@ public class SwordSlot : MonoBehaviour
     public void SetSword(Sword s)
     {
         sword = s;
-        visualController.Show(sword.level);
+        // TODO: visualController.Show(sword.level)
     }
     
     void Update()
@@ -40,30 +40,8 @@ public class SwordSlot : MonoBehaviour
     private void TryAttack()
     {
         // TODO: DefenseManager.GetAllEnemies() 가져오기
-        var enemies = GameManager.Instance.defenseManager.GetAllEnemies();
-        Enemy target = null;
-        float highestProgress = -1;
         // TODO: attackRange 내 적 필터링
-        foreach (Enemy enemy in enemies)
-        {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            
-            if (distance <= attackRange)
-            {
         // TODO: 진행도 가장 높은 적 선택
-                float progress = enemy.GetProgress();
-
-                if (progress > highestProgress)
-                {
-                    highestProgress = progress;
-                    target = enemy; // 选择当前敌人作为目标
-                }
-            }
-        }
         // TODO: target.TakeDamage(sword.power)
-        if (target != null)
-        {
-            target.TakeDamage(sword.power);
-        }
     }
 }
